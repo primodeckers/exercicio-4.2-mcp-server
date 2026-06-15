@@ -6,7 +6,7 @@ from mcp.client.stdio import stdio_client
 
 
 async def main() -> dict:
-    params = StdioServerParameters(command="python", args=["servidor_mcp.py"])
+    params = StdioServerParameters(command="python3", args=["servidor_mcp.py"])
     async with stdio_client(params) as (read, write):
         async with ClientSession(read, write) as session:
             await session.initialize()
@@ -20,7 +20,7 @@ async def main() -> dict:
             return {
                 "tools": nomes,
                 "criar_resultado": json.loads(criar.content[0].text),
-                "listar_resultado": json.loads(listar.content[0].text),
+                "listar_resultado": [json.loads(item.text) for item in listar.content],
             }
 
 
